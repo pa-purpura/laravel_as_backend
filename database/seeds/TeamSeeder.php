@@ -13,12 +13,15 @@ class TeamSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+
+      // $genders = ['AC','F.c','C.F.','FC.','SS', 'A.C'];
+
       for ($i=0; $i < 3; $i++) {
 
         $new_team = new Team;
 
         $data = [
-            'name' => $faker->word,
+            'name' =>$faker->word,  
             'town' => $faker->city,
             'address' =>$faker->address,
             'phone' =>$faker->phoneNumber,

@@ -14,6 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/players', 'PlayerController@index')->name('players.index');
+Route::get('/players/{id}', 'PlayerController@player')->name('players.detail');
+Route::post('/players', 'PlayerController@create')->name('players.new');
+
+
+
+Route::get('/agents', 'AgentController@index')->name('agents.index');
+Route::get('/agents/{id}', 'AgentController@agent')->name('agents.detail');
+Route::post('/agents', 'AgentController@create')->name('agents.new');
+
+
+Route::get('/teams', 'TeamController@index')->name('teams.index');
+Route::get('/teams/{id}', 'TeamController@team')->name('teams.detail');
+Route::post('/teams', 'TeamController@create')->name('teams.new');
