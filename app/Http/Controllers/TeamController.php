@@ -8,10 +8,19 @@ use App\Player;
 
 class TeamController extends Controller
 {
+
+  /*
+   *  Return a agents list
+   */
+
   public function index(){
 
     return response()->json(Team::all());
   }
+
+  /*
+   *  Return a team detail
+   */
 
   public function team(Request $request, $id){
 
@@ -23,6 +32,10 @@ class TeamController extends Controller
     }
   }
 
+  /*
+   *  team to CREATE
+   */
+
   public function create(Request $request){
 
     $data = $request->all();
@@ -31,9 +44,70 @@ class TeamController extends Controller
 
     $new_team->fill($data);
 
-    $new_team->save();
+    try {
+      $new_team->save();
+    }
+    catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'result' => $e->getMessage(),
+      ]);
+    }
 
-    // return (una action da scegliere);
+    return response()->json([
+        'success' => true,
+        'result' => $new_team,
+      ]);
   }
 
+  /*
+   *  team to DELETE
+   */
+
+  public function delete($id){
+    $team_to_delete = Team::find($id);
+
+    try {
+      $team_to_delete->delete();
+    }
+    catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'result' => $e->getMessage(),
+      ]);
+    }
+
+    return response()->json([
+        'success' => true,
+        'result' => $team_to_delete,
+      ]);
+  }
+
+  /*
+   *  team to UPDATE
+   */
+
+  public function edit(Request $request, $id){
+
+    $team_to_update = Team::find($id);
+
+    $team_to_update->fill($request->all());
+
+    try {
+      $team_to_update->save();
+    }
+    catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'result' => $e->getMessage(),
+      ]);
+    }
+
+    return response()->json([
+        'success' => true,
+        'result' => $team_to_update,
+      ]);
+
+  }
+// end class
 }

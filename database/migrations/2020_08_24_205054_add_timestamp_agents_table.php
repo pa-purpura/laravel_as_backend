@@ -11,6 +11,10 @@ class AddTimestampAgentsTable extends Migration
      *
      * @return void
      */
+
+     /* I'd forgotten the 'timestamp' columns om first migration (create_agent_table), and so i do this migrations
+        to add it. */
+
     public function up()
     {
         Schema::table('agents', function (Blueprint $table) {

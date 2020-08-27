@@ -8,10 +8,19 @@ use App\Player;
 
 class AgentController extends Controller
 {
+
+  /*
+   *  Return a agents list
+   */
+
   public function index(){
 
     return response()->json(Agent::all());
   }
+
+  /*
+   *  Return a agent detail
+   */
 
   public function agent(Request $request, $id){
 
@@ -23,6 +32,10 @@ class AgentController extends Controller
     }
   }
 
+  /*
+   *  agent to CREATE
+   */
+
   public function create(Request $request){
 
     $data = $request->all();
@@ -31,9 +44,70 @@ class AgentController extends Controller
 
     $new_agent->fill($data);
 
-    $new_agent->save();
+    try {
+      $new_agent->save();
+    }
+    catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'result' => $e->getMessage(),
+      ]);
+    }
 
-    // return (una action da scegliere);
+    return response()->json([
+        'success' => true,
+        'result' => $new_agent,
+      ]);
   }
 
+  /*
+   *  agent to DELETE
+   */
+
+  public function delete($id){
+    $agent_to_delete = Agent::find($id);
+
+    try {
+      $agent_to_delete->delete();
+    }
+    catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'result' => $e->getMessage(),
+      ]);
+    }
+
+    return response()->json([
+        'success' => true,
+        'result' => $agent_to_delete,
+      ]);
+  }
+
+  /*
+   *  agent to UPDATE
+   */
+
+  public function edit(Request $request, $id){
+
+    $agent_to_update = Agent::find($id);
+
+    $agent_to_update->fill($request->all());
+
+    try {
+      $agent_to_update->save();
+    }
+    catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'result' => $e->getMessage(),
+      ]);
+    }
+
+    return response()->json([
+        'success' => true,
+        'result' => $agent_to_update,
+      ]);
+
+  }
+// end class
 }

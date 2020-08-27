@@ -16,11 +16,11 @@ class CreatePlayersTable extends Migration
       Schema::create('players', function (Blueprint $table) {
 
           $table->increments('id');
-          $table->string('name', 50);
-          $table->string('lastname', 50);
+          $table->string('name');
+          $table->string('lastname');
 
-          $table->string('age', 50);
-          $table->string('country', 50);
+          $table->string('age');
+          $table->string('country');
           $table->date('contract_expiry');
 
           $table->timestamps();
